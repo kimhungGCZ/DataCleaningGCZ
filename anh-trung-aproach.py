@@ -32,7 +32,7 @@ def generate_normal_time_series(num, minl=50, maxl=1000):
 
 #der: derivative
 # sec_der : second_derivative
-data = generate_normal_time_series(7, 50, 200)
+#data = generate_normal_time_series(7, 50, 200)
 ys2 = range(len(data))
 # data_smooth = lowess(data, ys2, is_sorted=True, frac=0.05, it=0)
 # data = map(lambda x: x[1], data_smooth)
@@ -49,15 +49,15 @@ median_sec_der = np.median(sec_der)
 std_sec_der = np.std(sec_der)
 
 
-breakpoint_candidates = filter(lambda x: np.abs(x[1] - median_sec_der) > np.abs(std_sec_der) and x[1]>0, enumerate(sec_der))
-critical_points = list(map(lambda x: (x[0] + 1, data[x[0] + 1]), breakpoint_candidates))
+#breakpoint_candidates = filter(lambda x: np.abs(x[1] - median_sec_der) > np.abs(std_sec_der) and x[1]>0, enumerate(sec_der))
+breakpoint_candidates = list(map(lambda x: np.abs(x[1] - median_sec_der) - np.abs(std_sec_der), enumerate(sec_der)))
+#critical_points = list(map(lambda x: (x[0] + 1, data[x[0] + 1]), breakpoint_candidates))
 
 # critical_points = list(map(lambda idx_v: select_local_optimizer(data, der, idx_v[0]), critical_points))
 
 # print(critical_points)
-
+'''
 fig, ax1 = plt.subplots(figsize=(20,10))
-
 ax2 = ax1.twinx()
 
 #ax1.scatter(x, data)
@@ -65,8 +65,18 @@ ax2 = ax1.twinx()
 data_tmp = np.array(data)
 #ax1.quiver(x, data, x[1:] - x[:-1], data_tmp[1:] - data_tmp[:-1])
 #ax1.scatter(x, data1, color=["y"])
-ax1.plot(x, data)
 
-x_critical, y_critical = [list(c) for c in zip(*critical_points)]
-ax1.scatter(x_critical, y_critical, color=['r'])
+# x_critical, y_critical = [list(c) for c in zip(*critical_points)]
+# ax1.scatter(x_critical, y_critical, color=['r'])
+
+'''
+plt.figure(1, figsize=(28, 12), dpi=80, facecolor='w', edgecolor='k')
+
+plt.subplot(211)
+plt.title("Raw data")
+plt.plot(data)
+
+plt.subplot(212)
+plt.title("Detection")
+plt.plot(breakpoint_candidates)
 plt.show()

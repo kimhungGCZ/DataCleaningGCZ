@@ -46,7 +46,7 @@ plt.plot(data)
 import bayesian_changepoint_detection.online_changepoint_detection as oncd
 from functools import partial
 
-R, maxes = oncd.online_changepoint_detection(data, partial(oncd.constant_hazard, 2), oncd.StudentT(0.1, .01, 1, 0))
+R, maxes = oncd.online_changepoint_detection(data, partial(oncd.constant_hazard, 250), oncd.StudentT(0.1, .01, 1, 0))
 
 plt.subplot(212)
 plt.title("Detection")
